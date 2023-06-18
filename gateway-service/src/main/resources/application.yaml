@@ -1,0 +1,31 @@
+server:
+  port: 8084
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+    lease-renewal-interval-in-seconds: 5
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: book-service
+          uri: lb://book-service
+          predicates:
+            - Path=/api/book-service/**
+            - Header=spring-cloud-course
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: circuitBreaker
+                fallbackUri: forward:/fallback
+            - RewritePath=/api/book-service/(?<remains>.*), /$\{remains}
+            - RemoveRequestHeader=spring-cloud-course
