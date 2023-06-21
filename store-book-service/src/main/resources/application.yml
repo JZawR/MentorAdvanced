@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    stream:
+      function:
+        bindings:
+          nameSink-in-0: sinkinput
+server:
+  port: 8089

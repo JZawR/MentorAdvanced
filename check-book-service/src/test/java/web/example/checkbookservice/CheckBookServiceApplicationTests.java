@@ -1,4 +1,4 @@
-package com.example.checkbookservice;
+package web.example.checkbookservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
